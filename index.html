@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>empty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000;
+    --text: #f4f4f4;
+    --muted: #a8a8a8;
+    --glass: rgba(8,8,10,.52);
+    --line: rgba(255,255,255,.16);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Sfondo lava lamp ---------- */
+  .lava {
+    position: fixed; inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    background: #000;
+  }
+  /* the filter merges bubbles only when they touch, then they separate again */
+  .goo { position: absolute; inset: 0; filter: url(#goo); }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 34% 28%, #ffffff 0%, rgba(255,255,255,0) 22%),
+      radial-gradient(circle at 40% 36%, #f2f2f2 0%, #d2d2d2 38%, #9c9c9c 76%, #6a6a6a 100%);
+    opacity: .92;
+    will-change: transform;
+    animation: wander var(--t, 48s) ease-in-out var(--d, 0s) infinite;
+  }
+  @keyframes wander {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    25%  { transform: translate3d(var(--x1), var(--y1), 0) scale(var(--s1)); }
+    50%  { transform: translate3d(var(--x2), var(--y2), 0) scale(var(--s2)); }
+    75%  { transform: translate3d(var(--x3), var(--y3), 0) scale(var(--s1)); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+  }
+
+  /* ---------- Contenitore ---------- */
+  .wrap {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px 16px;
+  }
+  .card {
+    width: 100%; max-width: 440px;
+    padding: 36px 28px 30px;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    -webkit-backdrop-filter: blur(22px) saturate(110%);
+    backdrop-filter: blur(22px) saturate(110%);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    animation: appear .9s ease both;
+  }
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Foto ---------- */
+  .avatar {
+    width: 124px; height: 124px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #222;
+    border: 2px solid rgba(255,255,255,.9);
+    box-shadow: 0 0 0 6px rgba(255,255,255,.08), 0 0 34px rgba(255,255,255,.35);
+    transition: box-shadow .4s ease, transform .4s ease;
+  }
+  .avatar:hover { transform: scale(1.04); box-shadow: 0 0 0 8px rgba(255,255,255,.12), 0 0 46px rgba(255,255,255,.5); }
+
+  h1 { margin-top: 20px; font-size: 1.9rem; font-weight: 600; letter-spacing: -.01em; }
+
+  /* ---------- Link ---------- */
+  .links { margin-top: 26px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 2px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; padding: 0;
+    background: none; border: 0; border-radius: 50%;
+    cursor: pointer; text-decoration: none;
+    transition: transform .25s ease, filter .25s ease;
+  }
+  .btn:hover, .btn:focus-visible { transform: scale(1.14); filter: brightness(1.12); outline: none; }
+  .btn:focus-visible { box-shadow: 0 0 0 3px rgba(255,255,255,.7); }
+  .btn:active { transform: scale(.98); }
+  .btn svg { width: 40px; height: 40px; display: block; }
+
+  /* ---------- Messaggio di conferma ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; z-index: 5;
+    transform: translate(-50%, 20px);
+    padding: 10px 20px;
+    background: rgba(255,255,255,.95); color: #000;
+    border-radius: 999px;
+    font-size: .9rem; font-weight: 500;
+    opacity: 0; pointer-events: none;
+  }
+  .toast.show { animation: toast 2.2s ease forwards; }
+  @keyframes toast {
+    0%   { opacity: 0; transform: translate(-50%, 20px); }
+    12%  { opacity: 1; transform: translate(-50%, 0); }
+    80%  { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, 10px); }
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 30px 18px 24px; border-radius: 24px; }
+    h1 { font-size: 1.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { animation-duration: 160s !important; }
+    .card { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="goo" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" result="goo"/>
+      <feGaussianBlur in="goo" stdDeviation="1.2"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="lava" aria-hidden="true">
+  <div class="goo">
+    <span class="bubble" style="--x1:-14.7vw;--y1:36.6vh;--x2:14.9vw;--y2:11.7vh;--x3:3.7vw;--y3:-26.0vh;--s1:0.90;--s2:1.01;--t:63s;--d:-44s;width:176px;height:176px;left:29.9%;top:10.2%"></span>
+    <span class="bubble" style="--x1:-1.2vw;--y1:-4.5vh;--x2:11.0vw;--y2:1.5vh;--x3:4.5vw;--y3:-0.0vh;--s1:1.03;--s2:0.99;--t:43s;--d:-1s;width:84px;height:84px;left:7.5%;top:19.1%"></span>
+    <span class="bubble" style="--x1:6.6vw;--y1:-14.0vh;--x2:-8.7vw;--y2:-16.0vh;--x3:-13.8vw;--y3:20.2vh;--s1:0.98;--s2:1.08;--t:70s;--d:-59s;width:34px;height:34px;left:27.6%;top:91.8%"></span>
+    <span class="bubble" style="--x1:-9.3vw;--y1:31.2vh;--x2:-1.0vw;--y2:36.5vh;--x3:-3.3vw;--y3:-32.4vh;--s1:1.03;--s2:1.07;--t:65s;--d:-0s;width:44px;height:44px;left:37.6%;top:88.2%"></span>
+    <span class="bubble" style="--x1:8.3vw;--y1:-29.0vh;--x2:-8.1vw;--y2:-30.3vh;--x3:-14.1vw;--y3:22.6vh;--s1:0.94;--s2:1.01;--t:46s;--d:-44s;width:150px;height:150px;left:26.8%;top:9.8%"></span>
+    <span class="bubble" style="--x1:4.6vw;--y1:-29.1vh;--x2:-2.5vw;--y2:-21.8vh;--x3:-7.4vw;--y3:35.8vh;--s1:1.06;--s2:0.95;--t:60s;--d:-8s;width:72px;height:72px;left:43.2%;top:19.2%"></span>
+    <span class="bubble" style="--x1:4.5vw;--y1:-30.4vh;--x2:15.7vw;--y2:-21.8vh;--x3:-7.7vw;--y3:20.7vh;--s1:0.97;--s2:0.95;--t:48s;--d:-41s;width:96px;height:96px;left:83.4%;top:21.0%"></span>
+    <span class="bubble" style="--x1:3.2vw;--y1:-9.8vh;--x2:-1.5vw;--y2:34.9vh;--x3:-0.5vw;--y3:5.7vh;--s1:1.07;--s2:0.92;--t:55s;--d:-13s;width:52px;height:52px;left:8.8%;top:10.1%"></span>
+    <span class="bubble" style="--x1:-9.9vw;--y1:18.2vh;--x2:14.1vw;--y2:-23.1vh;--x3:14.4vw;--y3:29.0vh;--s1:1.02;--s2:0.98;--t:63s;--d:-16s;width:60px;height:60px;left:16.2%;top:83.8%"></span>
+    <span class="bubble" style="--x1:6.5vw;--y1:-18.5vh;--x2:10.4vw;--y2:7.3vh;--x3:-6.6vw;--y3:-24.7vh;--s1:1.04;--s2:0.90;--t:69s;--d:-16s;width:240px;height:240px;left:11.6%;top:5.5%"></span>
+    <span class="bubble" style="--x1:-7.0vw;--y1:31.7vh;--x2:-9.5vw;--y2:-36.7vh;--x3:-7.4vw;--y3:-4.1vh;--s1:0.91;--s2:0.92;--t:65s;--d:-40s;width:210px;height:210px;left:23.0%;top:52.3%"></span>
+    <span class="bubble" style="--x1:12.5vw;--y1:36.5vh;--x2:5.0vw;--y2:14.5vh;--x3:2.7vw;--y3:-27.3vh;--s1:0.91;--s2:0.88;--t:39s;--d:-14s;width:90px;height:90px;left:35.9%;top:53.5%"></span>
+    <span class="bubble" style="--x1:4.4vw;--y1:-1.4vh;--x2:7.4vw;--y2:-13.8vh;--x3:16.0vw;--y3:-32.3vh;--s1:1.01;--s2:1.06;--t:69s;--d:-1s;width:128px;height:128px;left:85.7%;top:65.1%"></span>
+    <span class="bubble" style="--x1:13.3vw;--y1:-11.3vh;--x2:5.9vw;--y2:30.5vh;--x3:11.9vw;--y3:-6.3vh;--s1:1.06;--s2:1.09;--t:59s;--d:-47s;width:64px;height:64px;left:84.8%;top:68.3%"></span>
+    <span class="bubble" style="--x1:3.5vw;--y1:-31.9vh;--x2:4.5vw;--y2:37.5vh;--x3:12.2vw;--y3:17.3vh;--s1:0.98;--s2:1.06;--t:48s;--d:-28s;width:110px;height:110px;left:54.7%;top:58.2%"></span>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="card">
+    <img class="avatar" alt="Profile photo" src="images/profile.jpg">
+
+    <h1>empty</h1>
+
+    <nav class="links">
+      <a class="btn" href="https://github.com/cyberempty" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#f4f4f4"/><g transform="translate(5.2 5.2) scale(.9)"><path fill="#0b0b0b" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></g></svg>
+      </a>
+
+      <button class="btn" type="button" aria-label="Copy Bitcoin address" title="Bitcoin"
+        onclick="navigator.clipboard.writeText('bc1q365rdj7y807pk40kh38yrqvyj02zgyv3sxephw');var t=document.getElementById('toast');t.classList.remove('show');void t.offsetWidth;t.classList.add('show')">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#f7931a"/><path fill="#fff" d="M22.3 14c.3-2.1-1.3-3.2-3.5-4l.7-2.9-1.7-.4-.7 2.8-1.4-.3.7-2.8-1.7-.4-.7 2.9-1.1-.3-2.4-.6-.5 1.8s1.3.3 1.2.3c.7.2.8.6.8 1l-.8 3.3.2.1-.2-.1-1.1 4.6c-.1.2-.3.5-.8.4 0 0-1.2-.3-1.2-.3l-.8 2 2.3.6 1.2.3-.7 2.9 1.7.4.7-2.9 1.4.4-.7 2.8 1.7.4.7-2.9c3 .6 5.2.3 6.1-2.3.8-2.1 0-3.3-1.6-4.1 1.2-.3 2-1 2.2-2.6Zm-4 5.6c-.5 2.1-4.1 1-5.2.7l.9-3.7c1.2.3 4.8.9 4.3 3Zm.6-5.6c-.5 1.9-3.4.9-4.4.7l.8-3.3c1 .3 4 .7 3.6 2.6Z"/></svg>
+      </button>
+
+      <button class="btn" type="button" aria-label="Copy Ethereum address" title="Ethereum"
+        onclick="navigator.clipboard.writeText('0x79c411A1D906D5d3e381f6B4E0BC680c4d1F1505');var t=document.getElementById('toast');t.classList.remove('show');void t.offsetWidth;t.classList.add('show')">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#627eea"/><path fill="#fff" fill-opacity=".6" d="M16.5 4v8.9l7.5 3.3z"/><path fill="#fff" d="M16.5 4 9 16.2l7.5-3.3z"/><path fill="#fff" fill-opacity=".6" d="M16.5 21.9V28L24 17.6z"/><path fill="#fff" d="M16.5 28v-6.1L9 17.6z"/><path fill="#fff" fill-opacity=".2" d="m16.5 20.6 7.5-4.4-7.5-3.3z"/><path fill="#fff" fill-opacity=".6" d="m9 16.2 7.5 4.4v-7.7z"/></svg>
+      </button>
+    </nav>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Address copied!</div>
+
+<script>
+/* Random bubbles: a new layout on every page load */
+(function () {
+  var box = document.querySelector('.goo');
+  if (!box) return;
+  var r = function (a, b) { return a + Math.random() * (b - a); };
+  var cols = 5, rows = 4, html = '';
+  for (var i = 0; i < cols; i++) {
+    for (var j = 0; j < rows; j++) {
+      if (Math.random() < 0.22) continue;               /* leave some cells empty */
+      var size = Math.random() < 0.25 ? r(130, 230) : r(34, 120);
+      var left = (i + r(0.1, 0.9)) / cols * 100;
+      var top  = (j + r(0.1, 0.9)) / rows * 100;
+      var t = r(34, 70);
+      var st = 'width:' + size.toFixed(0) + 'px;height:' + size.toFixed(0) + 'px;' +
+               'left:' + left.toFixed(1) + '%;top:' + top.toFixed(1) + '%;' +
+               '--t:' + t.toFixed(0) + 's;--d:-' + r(0, t).toFixed(0) + 's;' +
+               '--s1:' + r(.9, 1.1).toFixed(2) + ';--s2:' + r(.88, 1.12).toFixed(2) + ';';
+      for (var k = 1; k <= 3; k++) {
+        st += '--x' + k + ':' + r(-20, 20).toFixed(1) + 'vw;--y' + k + ':' + r(-45, 45).toFixed(1) + 'vh;';
+      }
+      html += '<span class="bubble" style="' + st + '"></span>';
+    }
+  }
+  box.innerHTML = html;
+})();
+</script>
+</body>
+</html>
