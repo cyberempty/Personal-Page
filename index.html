@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>empty · cyberempty</title>
+<meta name="description" content="Personal page of Empty: technology, cybersecurity and privacy. Open source projects on GitHub.">
+<style>
+  :root {
+    --nero: #000000;
+    --grafite: #141414;
+    --linea: #2e2e2e;
+    --grigio: #9a9a9a;
+    --chiaro: #ffffff;
+    --bianco: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { background: var(--nero); }
+
+  body {
+    background: var(--nero);
+    color: var(--chiaro);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--bianco);
+    outline-offset: 4px;
+  }
+
+  .contenitore {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---------- Intestazione ---------- */
+  header {
+    padding: clamp(4rem, 12vw, 9rem) 0 clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .nome {
+    font-size: clamp(5rem, 24vw, 15rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--bianco);
+    text-stroke: 2px var(--bianco);
+    margin-left: -0.04em;
+  }
+
+  .presentazione {
+    max-width: 38rem;
+    margin-top: 2.5rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--bianco);
+  }
+
+  .presentazione span { color: var(--grigio); }
+
+  .contatti {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .contatti a {
+    text-decoration: none;
+    color: var(--bianco);
+    border: 1px solid var(--bianco);
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .contatti a:hover,
+  .contatti a:focus-visible {
+    background: var(--bianco);
+    color: var(--nero);
+  }
+
+  /* ---------- Sezioni ---------- */
+  section {
+    border-top: 1px solid var(--linea);
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bianco);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  .chi-sono p {
+    max-width: 40rem;
+  }
+
+  .chi-sono p + p { margin-top: 1rem; }
+
+  .interessi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    list-style: none;
+  }
+
+  .interessi li {
+    border: 1px solid var(--linea);
+    background: var(--grafite);
+    color: var(--chiaro);
+    padding: 0.3rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Progetti ---------- */
+  .progetti { list-style: none; border-top: 1px solid var(--linea); }
+
+  .progetti li { border-bottom: 1px solid var(--linea); }
+
+  .progetto {
+    display: grid;
+    grid-template-columns: 11rem 1fr auto auto;
+    gap: 0.5rem 2rem;
+    align-items: baseline;
+    padding: 1.5rem 1rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .progetto h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--bianco);
+  }
+
+  .progetto p {
+    color: var(--grigio);
+    max-width: 34rem;
+    font-size: 1rem;
+  }
+
+  .progetto .linguaggio {
+    font-size: 0.9rem;
+    color: var(--grigio);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .progetto .apri {
+    align-self: center;
+    color: var(--bianco);
+    transition: transform 0.15s;
+  }
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .progetto:hover .apri,
+  .progetto:focus-visible .apri {
+    color: var(--nero);
+    transform: translate(2px, -2px);
+  }
+
+  .progetto:hover,
+  .progetto:focus-visible {
+    background: var(--bianco);
+    outline-offset: -2px;
+  }
+
+  .progetto:hover h3,
+  .progetto:focus-visible h3 { color: var(--nero); }
+
+  .progetto:hover p,
+  .progetto:focus-visible p,
+  .progetto:hover .linguaggio,
+  .progetto:focus-visible .linguaggio { color: #3a3a3a; }
+
+  .progetto:focus-visible { outline: 2px solid var(--grigio); }
+
+  /* ---------- Piè di pagina ---------- */
+  footer {
+    border-top: 1px solid var(--linea);
+    padding: 2rem 0 3rem;
+    color: var(--grigio);
+    font-size: 0.9rem;
+  }
+
+  footer a { color: var(--chiaro); }
+  footer a:hover { color: var(--bianco); }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 700px) {
+    .progetto {
+      grid-template-columns: 1fr auto auto;
+      padding: 1.25rem 0.75rem;
+    }
+    .progetto p { grid-column: 1 / -1; grid-row: 2; }
+    .progetto .linguaggio { grid-column: 2; grid-row: 1; }
+    .progetto .apri { grid-column: 3; grid-row: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="contenitore">
+
+  <header>
+    <h1 class="nome">empty</h1>
+    <p class="presentazione">
+      Hi, I'm Empty. I like technology, cybersecurity, and privacy protection.
+      <span>I use vibe coding and AI to design and develop random things.</span>
+    </p>
+    <nav class="contatti" aria-label="Main links">
+      <a href="https://github.com/cyberempty" target="_blank" rel="noopener noreferrer">GitHub profile</a>
+      <a href="https://github.com/cyberempty?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="chi-sono" aria-labelledby="titolo-chi-sono">
+      <h2 id="titolo-chi-sono">About me</h2>
+      <p>
+        I'm passionate about technology and cybersecurity. I believe everyone should be able to
+        control their own data, which is why my projects run offline, locally, and without accounts.
+      </p>
+      <p>
+        I use AI as a working tool to turn ideas into real programs, and I publish them on GitHub.
+      </p>
+      <ul class="interessi">
+        <li>Technology</li>
+        <li>Cybersecurity</li>
+        <li>Privacy</li>
+        <li>Vibe coding</li>
+        <li>Artificial intelligence</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titolo-progetti">
+      <h2 id="titolo-progetti">Projects</h2>
+      <ul class="progetti">
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/Crypton" target="_blank" rel="noopener noreferrer">
+            <h3>Crypton</h3>
+            <p>A portable, secure desktop app that encrypts any file with a password and hides files inside images. A single executable, no installation.</p>
+            <span class="linguaggio">Rust</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/IP-Lookup" target="_blank" rel="noopener noreferrer">
+            <h3>IP-Lookup</h3>
+            <p>A Python tool for geolocating IP addresses and analyzing network data via ipinfo.io: location, ISP, and timezone.</p>
+            <span class="linguaggio">Python</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/Mindly" target="_blank" rel="noopener noreferrer">
+            <h3>Mindly</h3>
+            <p>A portable mind map editor for Windows, macOS and Linux. Offline, no account or cloud, with autosave and local files.</p>
+            <span class="linguaggio">JavaScript</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/Docly" target="_blank" rel="noopener noreferrer">
+            <h3>Docly</h3>
+            <p>An offline word processor that runs entirely on your computer. Local documents with autosave and export to Word, PDF and more.</p>
+            <span class="linguaggio">JavaScript</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/Notium" target="_blank" rel="noopener noreferrer">
+            <h3>Notium</h3>
+            <p>A fast, portable offline text editor for Windows, Linux and macOS: tabs, syntax highlighting, dark themes, no installation.</p>
+            <span class="linguaggio">C#</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="progetto" href="https://github.com/cyberempty/Personal-Page" target="_blank" rel="noopener noreferrer">
+            <h3>Personal-Page</h3>
+            <p>The code of this personal page, written with plain HTML and CSS.</p>
+            <span class="linguaggio">HTML</span>
+            <svg class="apri" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr">Opens the repository on GitHub in a new page</span>
+          </a>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 empty · <a href="https://github.com/cyberempty" target="_blank" rel="noopener noreferrer">github.com/cyberempty</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
